@@ -1,0 +1,17 @@
+# This file specifies the conda environment needed for amplicon processing
+
+name: MibigProcessing
+
+channels:
+  - r
+  - bioconda
+  - defaults
+
+dependencies:
+  - python=3
+  - r
+  - r-dplyr
+  - r-devtools
+  - bioconductor-biostrings
+  - biopython
+  - click>=0.6

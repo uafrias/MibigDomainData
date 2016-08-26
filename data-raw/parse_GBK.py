@@ -14,7 +14,7 @@ def parse_GBK(gbk, dnadir, proteindir):
     gbkname = os.path.basename(gbk)
     gbkname = gbkname.split(".")[0]
     dnafile = "{}/genes.fna".format(dnadir)
-    proteinfile = "{}/protein.fna".format(proteindir)
+    proteinfile = "{}/proteins.faa".format(proteindir)
 
     print("Processing {} ....".format(gbkname))
     recs = SeqIO.parse(open(gbk, 'r'), "genbank")
@@ -44,7 +44,7 @@ def parse_GBK(gbk, dnadir, proteindir):
                 genename = cds.qualifiers['gene'][0]
             elif "locus_tag" in featurekeys:
                 print("no gene identifier found. using the locus_tag")
-                genename = cds.qualifiers['locus_tag'][0]
+                genename = cds.qualifiers['locus_tag'][0].replace("_", "-")
             elif "note" in featurekeys and "orf" in cds.qualifiers['note'][0].lower():
                 print("no gene identifier found. using the ORF ID in the 'note' slot")
                 genename = cds.qualifiers['note'][0].replace(" ", "-")

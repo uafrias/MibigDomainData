@@ -15,3 +15,4 @@ dependencies:
   - bioconductor-biostrings
   - biopython
   - click>=0.6
+  - parallel

@@ -1,15 +1,3 @@
-#' MibigDomainData: a package to obtain DNA sequences of PFAM domains found in Mibig
-#'
-#' This package provides a single data object, \link{mibigdomains}, that can be used
-#' obtain DNA sequences of PFAM-A protein domains from the Mibig Dataset \url{http://mibig.secondarymetabolites.org/} .
-#'
-#' The build scripts to obtain this data can be found in the data-raw directory.
-#'
-#' @docType package
-#' @name MibigDomainData
-#'
-NULL
-
 #' Boundaries of Mibig Proteins defined by PFAM-A domains and the nucleotide sequences that encode them.
 #'
 #' A dataset containing the nucleotide sequences of the PFAM-A-defined proteins domains found in the Mibig dataset. The build scripts to

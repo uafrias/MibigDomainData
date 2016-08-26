@@ -1,9 +1,9 @@
-Package: MibigDomainData
+Package: eSNaPD
 Type: Package
-Title: Nucelotide sequences of the Mibig proteins, corresponding to PFAM-A domains.
+Title: Tools for the environmental Surveyor of Natural Product Diversity (eSNaPD).
 Version: 0.1.0
 Authors@R: person("Zachary", "Charlop-Powers", email = "zcharlop@rockefeller.edu", role = c("aut", "cre"))
-Description: A data package to provide nucleotide sequecnes for the PFAM-A defined protein domains of the coding seqeunces from Mibit.
+Description: A data package to provide nucleotide sequecnes for the PFAM-A defined protein domains of the coding seqeunces from Mibig.
 License: CC
 LazyData: TRUE
 RoxygenNote: 5.0.1

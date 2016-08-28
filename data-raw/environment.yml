@@ -6,6 +6,7 @@ channels:
   - r
   - bioconda
   - defaults
+  - zachcp
 
 dependencies:
   - python=3
@@ -16,3 +17,4 @@ dependencies:
   - biopython
   - click>=0.6
   - parallel
+  - mibig-tools>=0.1.13

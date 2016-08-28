@@ -8,7 +8,8 @@ License: CC
 LazyData: TRUE
 SystemRequirements:
     blast,
-    GNU Parallel
+    GNU Parallel,
+    vsearch
 Imports:
     DegeneratePrimerTools,
     data.table (>= 1.9.6),

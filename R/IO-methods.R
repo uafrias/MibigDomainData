@@ -27,3 +27,22 @@ load_blast <- function(blastfile, indexcols = c("QueryID")) {
 
   return(dt)
 }
+#' Read Useach/Vsearch UC Files
+#'
+#' UC files are output from Robert Edgar's USEARCH program as well as the USEARCH clone,
+#' VSEARCH. The UC output file can be used as outpuf for blast-like searches as well as
+#' clustering. Each of those has slighly different usages of the output columns and users are
+#' encouraged to consult the documentation \url{http://drive5.com/usearch/manual/opt_uc.html}.
+#' This function imports all fields except columns 6 and 7 which are dummy columns preserved in
+#' the UC file for backwards compatability.
+#'
+#'
+#' @importFrom data.table fread
+#' @seealso \url{http://drive5.com/usearch/manual/opt_uc.html}
+#' @export
+load_uc_file <- function(ucfile) {
+  columns <- c("record.type", "cluster.number", "seqlength.or.clustersize", "percent.id", "strand", "compressed.alignment", "QueryID", "TargetID")
+  dt <- fread(ucfile, drop = c(6,7))
+  names(dt) <- columns
+  return(dt)
+}

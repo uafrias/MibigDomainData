@@ -15,7 +15,7 @@
 run_blast <- function(query, target, outfile=NULL, parallel=FALSE, blast_args="") {
   #intermediate files will be run in temp if no output is sent.
   wd <- tempdir()
-  on.exit(unlink(wd, recursive=TRUE))
+  on.exit(unlink(list.files(wd)))
 
 
   # handle the query. if a file, make sure that blastcmddb has been run.
@@ -53,7 +53,6 @@ run_blast <- function(query, target, outfile=NULL, parallel=FALSE, blast_args=""
     if(is.null(names(target))) stop("DNAStringSets must have names")
 
     targetdb <- tempfile(tmpdir = wd, fileext = "targetdb")
-    print(targetdb)
     writeXStringSet(x=target, filepath = targetdb)
     system(paste("makeblastdb -dbtype nucl -in", targetdb))
 
@@ -75,20 +74,16 @@ run_blast <- function(query, target, outfile=NULL, parallel=FALSE, blast_args=""
   } else {
     blastcmd <- paste("blastn", "-db", targetdb, "-query", queryfile, "-out", blastout, '-outfmt 6', blast_args)
   }
-  print(blastcmd)
+
   system(blastcmd)
 
 
   # return. If the fileoutput has been specified, the blast value has been saved there. Otherwise
   # read in the blast table.
   if (is.null(outfile)) {
-    print(blastout)
-    print(file.info(blastout))
-
-    try(blastdt <- fread(blastout), silent=TRUE)
+    try(blastdt <- load_blast(blastout), silent=TRUE)
     if (!exists("blastdt")) stop("BLAST did not return a match!")
 
     return(blastdt)
   }
-
 }

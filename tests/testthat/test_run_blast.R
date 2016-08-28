@@ -27,6 +27,7 @@ test_that("run-blast works on DNAStringSets", {
 test_that("run-blast can use GNU Parallel", {
   seqs1 <- lapply(1:100, function(x) {DNAString(x=generate_seq())})
   seqs1 <- DNAStringSet(seqs1)
+  names(seqs1) <- paste("Seq_", 1:100)
   blasttable <- run_blast(seqs1, seqs1, parallel = TRUE)
   expect_is(blasttable, "data.table")
 })

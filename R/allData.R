@@ -7,11 +7,13 @@
 #'  2. download the Mibig GBKs
 #'  3. parse the Mibig GBKs and write out both Nucleotide and Protein fastas for each CDS.
 #'  4. use hmmmer to obtian the boundaries of the PFMA hmms on the proteins
-#'  4. extract the nucleotide seqeunces corresponding to protein domains and save the file.
+#'  5. extract the nucleotide seqeunces corresponding to protein domains and save the file.
+#'  6. extract molecule info and biosynthetic class info from the JSON files
+#'  7. merge and save as an RDA file.
 #'
 #'  The resulting dataset is provided as a table with the following fields
 #'
-#' @format A data frame with 53940 rows and 10 variables:
+#' @format A data frame with 23362 rows and 9 variables:
 #' \describe{
 #'   \item{PFAM_ID}{PFAM accession id}
 #'   \item{Mibig_ID}{Mibig accession id}
@@ -20,6 +22,8 @@
 #'   \item{dnastart}{beginning of the DNA region encoding the protein domain of interest}
 #'   \item{dnaend}{end of the DNA region encoding the protein domain of interest}
 #'   \item{dnasequence}{the nucleotide sequence corresponding to the PFAM domain of interest}
+#'   \item{biosynthetic_class}{the nucleotide sequence corresponding to the PFAM domain of interest}
+#'   \item{molecule}{the molecule encoded by this cluster}
 #' }
 #' @source \url{http://mibig.secondarymetabolites.org/}
 #' @source \url{http://pfam.xfam.org/}

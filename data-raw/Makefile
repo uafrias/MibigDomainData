@@ -4,7 +4,6 @@
 # R: devtools, dplyr, Biostrings
 
 
-
 # get the Mibig GBK Data
 mibig_gbk/BGC0001310.gbk:
 	wget http://mibig.secondarymetabolites.org/mibig_gbk_1.2.tar.gz
@@ -30,16 +29,17 @@ proteins/proteins.faa: mibig_gbk/BGC0001310.gbk
 proteins/proteinhmmtbl.txt: proteins/proteins.faa
 	hmmsearch  --domtblout $@ --domE 1e-30 --cpu 6 Pfam-A.hmm  $<
 
-# create the Mibig Datatable
-createmibigtable: proteins/proteinhmmtbl.txt
-	R BATCH CMD make_mibig_table.R
-
 # process the Mibig JSON Files to obtain metadata
 clusters.csv: all_json/BGC0001310.json mibig_gbk/BGC0001310.gbk
 	#from the mibig-tools package
-	 mibig_process_folder --json_folder all_json --gbk_folder mibig_gbk
+	mibig_process_folder --json_folder all_json --gbk_folder mibig_gbk
+
+# create the Mibig Datatable
+createmibigtable: proteins/proteinhmmtbl.txt clusters.csv
+	R CMD BATCH make_mibig_table.R
+
 
 clean:
 	rm -rf proteins genes
 
-all: createmibigtable clusters.csv
+all: createmibigtable

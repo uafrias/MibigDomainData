@@ -92,6 +92,15 @@ mibigdomains <- genetbl %>% select(PFAM_ID,   Mibig_ID, gene_ID, protein_accessi
 mibigdomains <- data.table(mibigdomains)
 setkey(mibigdomains, "PFAM_ID")
 
+#add molecuel data from the clusters.csv file
+clusterinfo  <- fread("clusters.csv")
+clusterinfo$Mibig_ID <- clusterinfo$mibig_accession
+clusterinfo$biosynthetic_class <- clusterinfo$biosyn_class
+clusterinfo  <- clusterinfo[,c("Mibig_ID", "biosynthetic_class", "molecule"), with=FALSE]
+clusterinfo  <- unique(clusterinfo)
+setkey(clusterinfo, "Mibig_ID")
+
+mibigdomains <- merge(mibigdomains, clusterinfo, all.x=TRUE, by="Mibig_ID")
 
 print("Saving the Mibig data.")
 devtools::use_data(mibigdomains, pkg = "../", overwrite = TRUE)

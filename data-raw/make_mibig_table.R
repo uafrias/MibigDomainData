@@ -82,11 +82,16 @@ create_Mibig_table <- function(fnafile, domtblfile) {
 library(Biostrings)
 library(dplyr)
 library(devtools)
+library(data.table)
 
 print("Generating the Mibig data.")
 genetbl <- create_Mibig_table(fnafile="genes/genes.fna", domtblfile = "proteins/proteinhmmtbl.txt")
 mibigdomains <- genetbl %>% select(PFAM_ID,   Mibig_ID, gene_ID, protein_accession, dnastart, dnaend, dnasequence) %>%
   arrange(PFAM_ID< Mibig_ID, protein_accession, dnastart)
 
+mibigdomains <- data.table(mibigdomains)
+setkey(mibigdomains, "PFAM_ID")
+
+
 print("Saving the Mibig data.")
-devtools::use_data(mibigdomains, pkg = "../")
+devtools::use_data(mibigdomains, pkg = "../", overwrite = TRUE)

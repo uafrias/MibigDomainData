@@ -1,4 +1,4 @@
-Package: eSNaPD
+Package: esnapd
 Type: Package
 Title: Tools for the environmental Surveyor of Natural Product Diversity (eSNaPD).
 Version: 0.1.0
@@ -6,4 +6,14 @@ Authors@R: person("Zachary", "Charlop-Powers", email = "zcharlop@rockefeller.edu
 Description: A data package to provide nucleotide sequecnes for the PFAM-A defined protein domains of the coding seqeunces from Mibig.
 License: CC
 LazyData: TRUE
+SystemRequirements:
+    blast,
+    GNU Parallel
+Imports:
+    DegeneratePrimerTools,
+    data.table (>= 1.9.6),
+    Biostrings
+Depends:
+    R (>= 3.3.0)
 RoxygenNote: 5.0.1
+Suggests: testthat

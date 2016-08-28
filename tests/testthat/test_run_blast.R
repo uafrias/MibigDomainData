@@ -8,6 +8,10 @@ library("testthat"); packageVersion("testthat")
 context('Checking basic Blasting works')
 
 
+generate_seq <- function(seqlength=200) {
+  paste(sample(c("C","G","T","A"), size=seqlength, replace=TRUE), collapse = "")
+}
+
 test_that("run-blast works on DNAStringSets", {
   s1 <- "GCTCATTCCCAGAATTTGTGGCATTTTGTGTGGCGTCTTATTATCGGATATTTAGATTTTAACTGTAATAAGAACAGGGATAACACGATGCTGAGCCGCAAGCGCCGGGCGAGCAGCATATCCAGCCGGCAGGACGAGGATCCGCTGCAGCTGGACGACTCGACGCCGGAGCAGTCACCGGTGCAGCAGACGACGACACAATCGGCGCGAAAAAAGCGCCGTCTCGATCCCACAGAACTGTGCCAGCAATTGTACGATTCCATAAGGAACATAAAGAAGGAGGACGGTTCAATGCTGTGCGACACCTTCATCCGCGTGCCGAAGCGCCGGCAAGAGCCCTCGTACTATGA"
   refs1 <- DNAStringSet(list(DNAString(s1), DNAString("CTCTTTTTCGTGTGTGTGTGTGTTGTGTGT")))
@@ -18,5 +22,12 @@ test_that("run-blast works on DNAStringSets", {
 
   blasttable <- run_blast(refs1,refs2)
   expect_is(blasttable, "data.table")
-
 })
+
+test_that("run-blast can use GNU Parallel", {
+  seqs1 <- lapply(1:100, function(x) {DNAString(x=generate_seq())})
+  seqs1 <- DNAStringSet(seqs1)
+  blasttable <- run_blast(seqs1, seqs1, parallel = TRUE)
+  expect_is(blasttable, "data.table")
+})
+

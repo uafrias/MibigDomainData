@@ -15,6 +15,8 @@
 run_blast <- function(query, target, outfile=NULL, parallel=FALSE, blast_args="") {
   #intermediate files will be run in temp if no output is sent.
   wd <- tempdir()
+  on.exit(unlink(wd, recursive=TRUE))
+
 
   # handle the query. if a file, make sure that blastcmddb has been run.
   # if its an DNAString set, write a blastdb in the temp directory
@@ -68,15 +70,14 @@ run_blast <- function(query, target, outfile=NULL, parallel=FALSE, blast_args=""
   #run the blast job
   if (parallel) {
     #run the query using GNU parallel. See https://www.biostars.org/p/63816/
-    system(paste("cat", queryfile, " | parallel --block 100k --recstart '>' --pipe",
-                 "blastn", "-query - -db", targetdb, "-oufmt 6", blast_args, " > ", blastout))
-
+    blastcmd <- paste("cat", queryfile, " | parallel --block 100k --recstart '>' --pipe",
+                 "blastn", "-query - -db", targetdb, "-outfmt 6", blast_args, " > ", blastout)
   } else {
     blastcmd <- paste("blastn", "-db", targetdb, "-query", queryfile, "-out", blastout, '-outfmt 6', blast_args)
-    print(blastcmd)
-    system(blastcmd)
-
   }
+  print(blastcmd)
+  system(blastcmd)
+
 
   # return. If the fileoutput has been specified, the blast value has been saved there. Otherwise
   # read in the blast table.
